@@ -145,7 +145,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		drawnImage = cv2.cvtColor(threshImg, cv2.COLOR_GRAY2RGB)
 
 	# find the contours in the thresholded image...
-	im2, contours, high = cv2.findContours(threshImg, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+	contours, high = cv2.findContours(threshImg, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
 	# the arrays of detected targets, they're empty now, but we'll fill them next.
 	finalTargets = []

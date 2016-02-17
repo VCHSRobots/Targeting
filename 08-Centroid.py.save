@@ -1,8 +1,8 @@
 #
-#  07-AdaptiveThreshold.py
+#  08-Centroid.py
 #
-#  Seventh lesson in a tutorial for detecting a target in opencv using python on a raspberry pi.
-#  This lesson we check the four corners of our detection and measure the angles, we only keep detections where the angles are near 90 degrees
+#  Eighth lesson in a tutorial for detecting a target in opencv using python on a raspberry pi.
+#  This lesson we get the centroid of the target and measure it's angle in the field of view of the camera.
 #
 #    The algorithim follows these steps:
 #		1. Uses a threshold or an optional adaptive threshold to create a binary image
@@ -11,6 +11,7 @@
 #		4. Checks to see that the hull has a sufficently large hull
 #		5. Approximates the hull in order to get only 4 points (mostly a rectangle)
 #		6. Checks each side to make sure they are mostly horizontal or vertical
+#		7. Find the center of the target and measure it's angle in the field of view of the camera.
 #
 #		* Also there is an auto-exposure algorithim running to keep the image with a constant average pixel value.
 #
@@ -66,9 +67,20 @@ red = (0, 0, 255)
 green = (0, 255, 0)
 blue = (255, 0, 0)
 
+# Camera's field of view in horizontal and vertical in degrees:
+# the raspberry pi's camera has 53.50 horizontal and 41.41 vertical (https://www.raspberrypi.org/documentation/hardware/camera.md)
+CameraFOV = (53.5, 41.41)
+
 # the resoultion of the camera... common values: (1296,972), (640,480), (320,240), (240, 180)
 # smaller resolutions work best when viewed remotely, however they all work great natively
 resolution = (320,240)
+
+# gets the azmuith and elevation angles from a point in the image in degrees
+def GetAzEl(point):
+	az = point[0]/float(resolution[0]) - 0.5
+	el = (1 - point[1]/float(resolution[1])) - 0.5
+	return (az * CameraFOV[0], el * CameraFOV[1])
+
 
 # create the named window and the trackbars...
 winName = 'Target Detect'
@@ -76,7 +88,7 @@ cv2.namedWindow(winName)
 cv2.createTrackbar('showThreshold', winName, 1, 1, nothing)  # shows the threshold binary image if 1, shows the original otherwise
 cv2.createTrackbar('useAdaptiveThresh', winName, 1, 1, nothing) # 0 means regular threshold, 1 means adaptive threshold
 cv2.createTrackbar('adaptiveThreshSize', winName, 11, 55, nothing) # size of adaptive threshold window 
-cv2.createTrackbar('threshold', winName, 6, 255, nothing)  # the threshold value
+cv2.createTrackbar('threshold', winName, 4, 255, nothing)  # the threshold value
 cv2.createTrackbar('minPerim', winName, 100, 1000, nothing)  # the minimum perimiter of the convex hull to be kept
 cv2.createTrackbar('autoShutter', winName, 22, 255, nothing) # used to automatically set the shutter speed, this is the target average pixel value.
 cv2.createTrackbar('angleOffHoriz', winName, 20, 45, nothing) # used to require sides to be aligned vertical or horizontal
@@ -105,8 +117,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	autoShutter = cv2.getTrackbarPos('autoShutter', winName)
 	eps = cv2.getTrackbarPos('angleOffHoriz', winName)
 	adaptiveSize = cv2.getTrackbarPos('adaptiveThreshSize', winName)
-	if adaptiveSize < 3: adaptiveSize = 3
-	if adaptiveSize % 2 == 0: adaptiveSize += 1
+	if adaptiveSize < 3: adaptiveSize = 3		# the adaptive threshold filter size must be 3 or greater
+	if adaptiveSize % 2 == 0: adaptiveSize += 1 # and it must also be odd
+
 	ss = camera.shutter_speed	# also get the shutter speed.
 
 	#start timer
@@ -132,7 +145,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		drawnImage = cv2.cvtColor(threshImg, cv2.COLOR_GRAY2RGB)
 
 	# find the contours in the thresholded image...
-	contours, high = cv2.findContours(threshImg, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+	im2, contours, high = cv2.findContours(threshImg, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
 	# the arrays of detected targets, they're empty now, but we'll fill them next.
 	finalTargets = []
@@ -164,7 +177,27 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# time to draw on top of the original image....
 
 	# draw all the detected hulls back on the original image (green with a width of 3)
-	cv2.drawContours(drawnImage, finalTargets, -1, green, 3)
+	cv2.drawContours(drawnImage, finalTargets, -1, blue, 3)
+
+	# Find the center of each target:
+	for target in finalTargets:
+		# find it's moments (https://en.wikipedia.org/wiki/Image_moment):  
+		M = cv2.moments(target)
+
+		# get the center x and y values... again see the wiki article about image moments
+		cx = int(M['m10']/M['m00'])
+		cy = int(M['m01']/M['m00'])
+
+		# get the angles to the target
+		angles = GetAzEl((cx, cy))
+
+		# draw the angles on the screen
+		text = '(%.0f,%0.f)' % angles
+		cv2.putText(drawnImage, text, (cx + 5, cy + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.33, green, 1)
+
+		# draw a little crosshair at the center of the target
+		cv2.line(drawnImage, (cx-2, cy), (cx+2, cy), red, 2)	# little horizontal line
+		cv2.line(drawnImage, (cx, cy-2), (cx, cy+2), red, 2)	# little vertical line
 	
 	# draw some text with status...
 	text = 'Detect Time: %.0f ms' % (time)
@@ -189,8 +222,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if avg[0] < (autoShutter - 2):
 	 	inc = max(int(ss * 0.10), 2)  # if it's less than 2 use 2 
 
-	# print 'avg: %.0f, target value: %d, ss: %d, inc: %d' % (avg[0], autoShutter, ss, inc)
-	
 	# set the shutter speed
 	camera.shutter_speed = ss + inc
 
