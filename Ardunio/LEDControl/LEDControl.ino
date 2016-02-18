@@ -66,12 +66,12 @@ void loop() {
 void ChangeColor(int c, int brightness)
 {
   int s = brightness / 4;  // Should yeild a num between 0-255.
-    
-  if(c == 0) {set_ring(0, 0, 0, 0); return; }
-  if(c == 1) {set_ring(s, 0, 0, 0); return; }
-  if(c == 2) {set_ring(0, s, 0, 0); return; }
-  if(c == 3) {set_ring(0, 0, s, 0); return; }
-  if(c == 4) {set_ring(s, s, s, 0); return; }
+  s=255; 
+  if(c == 0) {set_ring(s, 0, 0, 0); return; }
+  if(c == 1) {set_ring(0, s, 0, 0); return; }
+  if(c == 2) {set_ring(0, 0, s, 0); return; }
+  if(c == 3) {set_ring(s, s, s, 0); return; }
+  if(c == 4) {set_ring(0, 0, 0, 0); return; }
   if(c == 5) {set_ring(s, s, 0, 0); return; }
   if(c == 6) {set_ring(s, 0, s, 0); return; }
   if(c == 7) {set_ring(0, s, s, 0); return; }
