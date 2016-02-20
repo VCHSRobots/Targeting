@@ -1,0 +1,6 @@
+This directory, TargetDetection, is used for Goal Tracking, and detection.
+The script TargetDetect.py takes images, analizes them, and places them into this directory.
+It then passes information from those images to a RoboRio.
+The code for detecting the goal in the TargetDetect.py file is courtesy of Kevin Brandon.
+The remainder of the code was created by the EpicRobotz Admin Web team.
+
