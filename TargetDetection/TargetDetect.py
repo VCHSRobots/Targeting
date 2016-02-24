@@ -7,18 +7,19 @@
 # import the necessary packages
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+from __future__ import print_function
 import math
 import time
 import cv2
 import numpy as np
 import os
 #Print startup informaton to console.
-print '[INFO] Program initiated!'
-print '[INFO] Press "ESC" to halt program execution.'
-print '[INFO] Starting program logging...'
-print '[INFO] Program logging started!'
+print("[INFO] Program initiated!")
+print("[INFO] Press "ESC" to halt program execution.")
+print("[INFO] Starting program logging...")
+print("[INFO] Program logging started!")
 print(time.strftime("%H:%M:%S") + " [INFO] Program logging started!", file=log.txt)
-print '[INFO] Starting communication with RoboRio module...'
+print("[INFO] Starting communication with RoboRio module...")
 print(time.strftime("%H:%M:%S") + " [INFO] Starting communication with RoboRio module...", file=log.txt)
 
 #######################################################################################################################################################################################################################################################
@@ -41,16 +42,16 @@ print(time.strftime("%H:%M:%S") + " [INFO] Starting communication with RoboRio m
 # 	}                                                                                                                                                                                                                                                 #
 #######################################################################################################################################################################################################################################################
 
-#Here are several outputs based upon the RoboRio's possible responses:
+#Here are several outputs based upon the RoboRio's possible responses: - One more thing here; these need to be changed to the function "print()" when they are implemented!
 #print '[WARN] Connection to RoboRio module taking longer than 1 second'
 #print '[FATL] Unable to start communication with RoboRio module: connection timeout.'
 #print '[FATL] Unable to start communication with RoboRio module: bad response.'
-print '[INFO] Started communication with RoboRio module.'
+print("[INFO] Started communication with RoboRio module.")
 print(time.strftime("%H:%M:%S") + " [INFO] Started communication with RoboRio module.", file=log.txt)
 # A call back function for the trackbars... it does nothing...
 def nothing(jnk):
 	pass
-print '[INFO] Creating functions and variables...'
+print("[INFO] Creating functions and variables...")
 print(time.strftime("%H:%M:%S") + " [INFO] Creating functions and variables...", file=log.txt)
 # A function that checks the 4 sides of a quadrilatal, for goal detection in images.  
 # If all 4 sides are close to horizontal or vertical (+/- epsilon) 
@@ -109,9 +110,9 @@ def GetAzEl(point):
 imagecount = 0
 # Interget which will be used, upon program halt, to calculate the average latentcy - or image process time
 AverageLatentcy = 0
-print '[INFO] Functions and variables created!'
+print("[INFO] Functions and variables created!")
 print(time.strftime("%H:%M:%S") + " [INFO] Functions and variables created!", file=log.txt)
-print '[INFO] Starting camera...'
+print("[INFO] Starting camera...")
 print(time.strftime("%H:%M:%S") + " [INFO] Starting camera...", file=log.txt)
 #Initialize the camera and grab a reference to the raw camera capture.
 camera = PiCamera()
@@ -121,9 +122,9 @@ camera.exposure_mode = 'off'
 rawCapture = PiRGBArray(camera, size=resolution)
 #Allow camera to start.
 time.sleep(0.5)
-print '[INFO] Camera started!'
+print("[INFO] Camera started!")
 print(time.strftime("%H:%M:%S") + " [INFO] Camera started!", file=log.txt)
-print '[INFO] Image taking and processing started!'
+print("[INFO] Image taking and processing started!")
 print(time.strftime("%H:%M:%S") + " [INFO] Image taking and processing started!", file=log.txt)
 #Capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -266,13 +267,13 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	#Add this times latentcy to AverageLatentcy variable
 	AverageLatentcy += Latentcy
 	#print 'Latentcy: ' + str(Latentcy)
-	print '[INFO] Image captured and processed: ' + imagename + '.'
+	print("[INFO] Image captured and processed: " + imagename + ".")
 	print(time.strftime("%H:%M:%S") + " [INFO] Image captured and processed: " + imagename + ".", file=log.txt)
 	if finalTargets == 0:
-		print '[INFO] No targets were detected in image ' + imagename + '.'
+		print("[INFO] No targets were detected in image " + imagename + ".")
 		print(time.strftime("%H:%M:%S") + " [INFO] No targets were detected in image " + imagename + ".", file=log.txt)
 	else:
-		print '[INFO] A total of ' finalTargets + 'targets were detected in ' + imagename + '.'
+		print("[INFO] A total of " finalTargets + "targets were detected in " + imagename + ".")
 		print(time.strftime("%H:%M:%S") + " [INFO] A total of " finalTargets + "targets were detected in " + imagename + ".", file=log.txt)
 		#
 		#SEND INFORMATION TO ROBORIO, AND LOG THAT INFORMATION WAS SENT, ALONG WITH A COPY OF THAT INFORMATION! (Both to console and to log file.)
@@ -285,17 +286,17 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	Latentcy = 0
 	if key == 27:
 		break
-print '[INFO] Abort program key press detected! Stopping program...'
+print("[INFO] Abort program key press detected! Stopping program...")
 print(time.strftime("%H:%M:%S") + " [INFO] Abort program key press detected! Stopping program...", file=log.txt)
-print '[INFO] Letting the RoboRio module know that program is stopping; sending end-of-stream signal...'.
+print("[INFO] Letting the RoboRio module know that program is stopping; sending end-of-stream signal...")
 print(time.strftime("%H:%M:%S") + " [INFO] Letting the RoboRio module know that program is stopping; sending end-of-stream signal...", file=log.txt)
 # Add in responses to other roborio reactions HERE.
-print '[INFO] RoboRio acknowledged end-of-stream signal; stream closed.'
+print("[INFO] RoboRio acknowledged end-of-stream signal; stream closed.")
 print(time.strftime("%H:%M:%S") + " [INFO] RoboRio acknowledged end-of-stream signal; stream closed.", file=log.txt)
 #Put code for roborio communication HERE.
 #Calculates average latentcy
 AverageLatentcy = AverageLatentcy / imagecount
-print '[INFO] Average image process time was ' + AverageLatentcy + '.'
+print("[INFO] Average image process time was " + AverageLatentcy + ".")
 print(time.strftime("%H:%M:%S") + " [INFO] Average image process time was " + AverageLatentcy + ".", file=log.txt)
-print '[INFO] Program stopped!'
+print("[INFO] Program stopped!")
 print(time.strftime("%H:%M:%S") + " [INFO] Program stopped!, file=log.txt)
