@@ -315,7 +315,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	cv2.putText(drawnImage, text, (10, 10), cv2.FONT_HERSHEY_SIMPLEX, 0.33, red, 1)
 	#Write the image into the datadump directory
 	imagecount = imagecount + 1
-	imagename = 'TargetImage_' + str(i) + '.jpg'
+	imagename = 'TargetImage_' + str(imagecount) + '.jpg'
 	cv2.imwrite(imagename,drawnImage)
 	CommOutbound("RPiConsole", "[INFO] Image captured: " + imagename + ".")
 	#Clear the stream in preparation for the next frame
