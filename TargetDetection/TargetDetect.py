@@ -336,7 +336,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if finalTargets == 0:
 		CommOutbound("RPiConsole", "[INFO] No goal was detected in image \"" + imagename + "\".")
 	else:
-		CommOutbound("RPiConsole", "[INFO] " + finalTargets + " targets were detected in \"" + imagename + "\"! Sending informatin to RoboRio module...")
+		CommOutbound("RPiConsole", "[INFO] " + str(finalTargets) + " targets were detected in \"" + imagename + "\"! Sending informatin to RoboRio module...")
 		#
 		#SEND INFORMATION TO ROBORIO, AND LOG THAT INFORMATION WAS SENT, ALONG WITH A COPY OF THAT INFORMATION! (Both to console and to log file.)
 		#
