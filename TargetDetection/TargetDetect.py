@@ -360,7 +360,7 @@ message = "[INFO] Program inturrupt signal detected! Stopping program..."
 CommOutbound("RPiConsole", "[INFO]  " + message)
 #Record average latentcy
 AverageLatentcy = AverageLatentcy / imagecount
-message = "Average image process time: " + AverageLatentcy + "."]
+message = "Average image process time: " + AverageLatentcy + "."
 CommOutbound("RPiConsole", "[INFO] Communication stream: RPi --> RPiConsole: " + message)
 #Stop of program message
 CommOutbound("RPiConsole", "[INFO] Program execution halting NOW.")
