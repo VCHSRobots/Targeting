@@ -5,9 +5,9 @@
 #####################################################################################################
 
 #Import the necessary packages
+from __future__ import print_function
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-from __future__ import print_function
 import math
 import time
 import cv2
@@ -17,24 +17,21 @@ import os.path
 #
 #Functions and Variables
 #
-#Creates log file if it does not exist::
-if os.path.isfile(log.txt) == false:
-	
 #CommOutbound Function
 def CommOutbound(recipiant, message):
 	if recipiant == "RPiConsole":
-		print message
+		print(message)
 		#Log the communication stream:
 		logmsg = time.time() + " [INFO] Communication stream: RPi --> RPiConsole: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
-	else if recipiant == "RoboRio":
+	elif recipiant == "RoboRio":
 		#Code HERE to send "message" to RoboRio
 		#Log the communication stream:
 		logmsg = time.time() + " [INFO] Communication stream: RPi --> RoboRio: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
-	else if recipiant == "Op":
+	elif recipiant == "Op":
 		#Log the communication stream:
 		logmsg = time.time() + " [INFO] Communication stream: RPi --> Op: " + message
 		with open('log.txt', 'a') as f:
@@ -53,15 +50,16 @@ def CommInbound(sender, mode, value):
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
 				#Code for listening goes HERE.
-		else if mode == "Number":
-			while messagesrecieved < value
+		elif mode == "Number":
+			messagesrecieved = 0
+			while messagesrecieved < value:
 				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
 				#Log the communication stream:
 				logmsg = time.time() + " [INFO] Communication stream: RoboRio --> RPi: " + message
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				messagesrecieved += 1
-	else if sender == "Op":
+	elif sender == "Op":
 		if mode == "Time":
 			#start timer
 			startlistentime = time.time()
@@ -72,15 +70,16 @@ def CommInbound(sender, mode, value):
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
 				#Code for listening goes HERE.
-		else if mode == "Number":
-				while messagesrecieved < value
-					#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
-					#Log the communication stream:
-					logmsg = time.time() + " [INFO] Communication stream: Pi --> Op: " + message
-					with open('log.txt', 'a') as f:
-						print(logmsg, file=f)
-					messagesrecieved += 1
-	else if sender == "All":
+		elif mode == "Number":
+			messagesrecieved = 0
+			while messagesrecieved < value:
+				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
+				#Log the communication stream:
+				logmsg = time.time() + " [INFO] Communication stream: Pi --> Op: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
+				messagesrecieved += 1
+	elif sender == "All":
 		if mode == "Time":
 			#start timer
 			startlistentime = time.time()
@@ -91,8 +90,9 @@ def CommInbound(sender, mode, value):
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
 				#Code for listening goes HERE.
-		else if mode == "Number":
-			while messagesrecieved < value
+		elif mode == "Number":
+			messagesrecieved = 0
+			while messagesrecieved < value:
 				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
 				#Log the communication stream:
 				logmsg = time.time() + " [INFO] Communication stream: Pi --> Op: " + message
@@ -364,7 +364,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	CommInbound("Op", "Time", "50")
 	if message == "halt"
 		break
-	else if message == "download"
+	elif message == "download"
 		#Code for transfering of log text data, and images will go HERE.
 	if key == 27:
 		break
