@@ -362,9 +362,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	Latentcy = 0
 	#Listen for any incoming messages from operator console:
 	CommInbound("Op", "Time", "50")
-	if message == "halt"
+	if message == "halt":
 		break
-	elif message == "download"
+	elif message == "download":
 		#Code for transfering of log text data, and images will go HERE.
 	if key == 27:
 		break
