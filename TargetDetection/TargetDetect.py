@@ -169,24 +169,12 @@ CommOutbound("RPiConsole", "[INFO] Starting camera...")
 #
 #Start communication with Operator Console and RoboRio
 #
+
 ########################################################################################################################################################################################################################################################
 # Send start of transmission feed character "/" to the RoboRio.                                                                                                                                                                                        #
 # Format is: "@(X,Y)(X,Y)(X,Y)#", with "@" indicating the start of a transmission feed, and "()" marking individual "packets" of information; in this case, X and Y values, conveying the position of the robot in relation to the center of the goal. #
 # "#" indicates the end of a transmission feed, and is sent when the program is halted.                                                                                                                                                                #
-# Put an IF statement here to see if communication is working correctly. When the RoboRio sees the "@" it should send back a message telling the program that it indeed sees the connection. Then we'll begin the rest of our script...                #
-#                                                                                                                                                                                                                                                      #
-# Here is some psudo-code:                                                                                                                                                                                                                             #
-#                                                                                                                                                                                                                                                      #
-#  string message = "@";                                                                                                                                                                                                                               #
-#  send(message);                                                                                                                                                                                                                                      #
-#  if (reply == "@(I see you!)#")                                                                                                                                                                                                                      #
-#  	{                                                                                                                                                                                                                                                  #
-# 	 Continue_With_Program                                                                                                                                                                                                                             #
-# 	}                                                                                                                                                                                                                                                  #
-#  else                                                                                                                                                                                                                                                #
-#  	{                                                                                                                                                                                                                                                  #
-# 	 DeleteSystem32... or provide an error message.                                                                                                                                                                                                    #
-# 	}                                                                                                                                                                                                                                                  #
+# Put an IF statement here to see if communication is working correctly. When the RoboRio sees the "@" it should send back a message telling the program that it indeed sees the connection. Then we'll begin the rest of our script...                #                                                                                                                                                                                               #
 ########################################################################################################################################################################################################################################################
 #
 #Start capturing and processing of images
@@ -345,7 +333,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	Latentcy = math.ceil((TimeEnd - TimeStart))
 	#Add this times latentcy to AverageLatentcy variable
 	AverageLatentcy += Latentcy
-	
 	if finalTargets == 0:
 		CommOutbound("RPiConsole", "[INFO] No goal was detected in image \"" + imagename + "\".")
 	else:
@@ -366,6 +353,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		break
 	elif message == "download":
 		#Code for transfering of log text data, and images will go HERE.
+		print("temp code here, just for syntax reasons while testing")
 	if key == 27:
 		break
 message = "[INFO] Program inturrupt signal detected! Stopping program..."
