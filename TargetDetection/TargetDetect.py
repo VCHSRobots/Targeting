@@ -194,7 +194,7 @@ except:
 #Capture frames from the camera
 CommOutbound("RPiConsole", "[INFO] Starting image capturing and processing...")
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-	if i % 10 == true:
+	if imagecount % 10 == true:
 		#
 		#Runs with settings set for "regular picture mode"
 		#
