@@ -1,10 +1,10 @@
 #####################################################################################################
-# Credits:                                                                                          #
+# Credits for TargetDetect.py:                                                                      #
 # The code for detecting the goal, and drawing on the image was created by Kevin Brandon. (Thanks!) #
 # The rest of the code was created by the EpicRobotz Admin Web team.                                #
 #####################################################################################################
 
-# import the necessary packages
+#Import the necessary packages
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from __future__ import print_function
@@ -13,46 +13,95 @@ import time
 import cv2
 import numpy as np
 import os
-#Print startup informaton to console.
-print("[INFO] Program initiated!")
-print("[INFO] Press "ESC" to halt program execution.")
-print("[INFO] Starting program logging...")
-print("[INFO] Program logging started!")
-print(time.strftime("%H:%M:%S") + " [INFO] Program logging started!", file=log.txt)
-print("[INFO] Starting communication with RoboRio module...")
-print(time.strftime("%H:%M:%S") + " [INFO] Starting communication with RoboRio module...", file=log.txt)
-
-#######################################################################################################################################################################################################################################################
-# Send start of transmission feed character "/" to the RoboRio.                                                                                                                                                                                        #
-# Format is: "@(X,Y)(X,Y)(X,Y)#", with "@" indicating the start of a transmission feed, and "()" marking individual "packets" of information; in this case, X and Y values, conveying the position of the robot in relation to the center of the goal. #
-# "#" indicates the end of a transmission feed, and is sent when the program is halted.                                                                                                                                                                #
-# Put an IF statement here to see if communication is working correctly. When the RoboRio sees the "@" it should send back a message telling the program that it indeed sees the connection. Then we'll begin the rest of our script...                #
-#                                                                                                                                                                                                                                                      #
-# Here is some psudo-code:                                                                                                                                                                                                                             #
-#                                                                                                                                                                                                                                                      #
-#  string message = "@";                                                                                                                                                                                                                               #
-#  send(message);                                                                                                                                                                                                                                      #
-#  if (reply == "@(I see you!)#")                                                                                                                                                                                                                      #
-#  	{                                                                                                                                                                                                                                                 #
-# 	 Continue_With_Program                                                                                                                                                                                                                            #
-# 	}                                                                                                                                                                                                                                                 #
-#  else                                                                                                                                                                                                                                                #
-#  	{                                                                                                                                                                                                                                                 #
-# 	 DeleteSystem32... or provide an error message.                                                                                                                                                                                                   #
-# 	}                                                                                                                                                                                                                                                 #
-#######################################################################################################################################################################################################################################################
-
-#Here are several outputs based upon the RoboRio's possible responses: - One more thing here; these need to be changed to the function "print()" when they are implemented!
-#print '[WARN] Connection to RoboRio module taking longer than 1 second'
-#print '[FATL] Unable to start communication with RoboRio module: connection timeout.'
-#print '[FATL] Unable to start communication with RoboRio module: bad response.'
-print("[INFO] Started communication with RoboRio module.")
-print(time.strftime("%H:%M:%S") + " [INFO] Started communication with RoboRio module.", file=log.txt)
+import os.path
+#
+#Functions and Variables
+#
+#Creates log file if it does not exist::
+if os.path.isfile(log.txt) == false:
+	
+#CommOutbound Function
+def CommOutbound(recipiant, message):
+	if recipiant == "RPiConsole":
+		print message
+		#Log the communication stream:
+		logmsg = time.time() + " [INFO] Communication stream: RPi --> RPiConsole: " + message
+		with open('log.txt', 'a') as f:
+			print(logmsg, file=f)
+	else if recipiant == "RoboRio":
+		#Code HERE to send "message" to RoboRio
+		#Log the communication stream:
+		logmsg = time.time() + " [INFO] Communication stream: RPi --> RoboRio: " + message
+		with open('log.txt', 'a') as f:
+			print(logmsg, file=f)
+	else if recipiant == "Op":
+		#Log the communication stream:
+		logmsg = time.time() + " [INFO] Communication stream: RPi --> Op: " + message
+		with open('log.txt', 'a') as f:
+			print(logmsg, file=f)
+#CommInbound Function
+def CommInbound(sender, mode, value):
+	message = ""
+	if sender == "RoboRio":
+		if mode == "Time":
+			#start timer
+			startlistentime = time.time()
+			#While time listened is less than the elapsed time:
+			with open('log.txt', 'a') as f:
+				print(logmsg, file=f)
+			while listentime < value:
+				#Set listentime to elapsed time:
+				listentime = time.time() - startlistentime
+				#Code for listening goes HERE.
+		else if mode == "Number":
+			while messagesrecieved < value
+				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
+				#Log the communication stream:
+				logmsg = time.time() + " [INFO] Communication stream: RoboRio --> RPi: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
+				messagesrecieved += 1
+	else if sender == "Op":
+		if mode == "Time":
+			#start timer
+			startlistentime = time.time()
+			#While time listened is less than the elapsed time:
+			with open('log.txt', 'a') as f:
+				print(logmsg, file=f)
+			while listentime < value:
+				#Set listentime to elapsed time:
+				listentime = time.time() - startlistentime
+				#Code for listening goes HERE.
+		else if mode == "Number":
+				while messagesrecieved < value
+					#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
+					#Log the communication stream:
+					logmsg = time.time() + " [INFO] Communication stream: Pi --> Op: " + message
+					with open('log.txt', 'a') as f:
+						print(logmsg, file=f)
+					messagesrecieved += 1
+	else if sender == "All":
+		if mode == "Time":
+			#start timer
+			startlistentime = time.time()
+			#While time listened is less than the elapsed time:
+			with open('log.txt', 'a') as f:
+				print(logmsg, file=f)
+			while listentime < value:
+				#Set listentime to elapsed time:
+				listentime = time.time() - startlistentime
+				#Code for listening goes HERE.
+		else if mode == "Number":
+			while messagesrecieved < value
+				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
+				#Log the communication stream:
+				logmsg = time.time() + " [INFO] Communication stream: Pi --> Op: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
+				messagesrecieved += 1
 # A call back function for the trackbars... it does nothing...
 def nothing(jnk):
 	pass
-print("[INFO] Creating functions and variables...")
-print(time.strftime("%H:%M:%S") + " [INFO] Creating functions and variables...", file=log.txt)
 # A function that checks the 4 sides of a quadrilatal, for goal detection in images.  
 # If all 4 sides are close to horizontal or vertical (+/- epsilon) 
 # AND make sure that the aspect ratio is within the tolerance
@@ -106,27 +155,56 @@ def GetAzEl(point):
 	az = point[0]/float(resolution[0]) - 0.5
 	el = (1 - point[1]/float(resolution[1])) - 0.5
 	return (az * CameraFOV[0], el * CameraFOV[1])
-# Integer for naming files, and determining the picture settings - every tenth picture is taken with "normal" settings, while all other pictures have the optimal settings for goal detection.
+#Integer for naming files, and determining the picture settings - every tenth picture is taken with "normal" settings, while all other pictures have the optimal settings for goal detection.
 imagecount = 0
-# Interget which will be used, upon program halt, to calculate the average latentcy - or image process time
+#Interget which will be used, upon program halt, to calculate the average latentcy - or image process time
 AverageLatentcy = 0
-print("[INFO] Functions and variables created!")
-print(time.strftime("%H:%M:%S") + " [INFO] Functions and variables created!", file=log.txt)
-print("[INFO] Starting camera...")
-print(time.strftime("%H:%M:%S") + " [INFO] Starting camera...", file=log.txt)
-#Initialize the camera and grab a reference to the raw camera capture.
-camera = PiCamera()
-camera.resolution = resolution
-camera.shutter_speed = 10000
-camera.exposure_mode = 'off'
-rawCapture = PiRGBArray(camera, size=resolution)
-#Allow camera to start.
-time.sleep(0.5)
-print("[INFO] Camera started!")
-print(time.strftime("%H:%M:%S") + " [INFO] Camera started!", file=log.txt)
-print("[INFO] Image taking and processing started!")
-print(time.strftime("%H:%M:%S") + " [INFO] Image taking and processing started!", file=log.txt)
+#
+#Initialize program
+#
+#Print startup informaton to console.
+CommOutbound("RPiConsole", "[INFO] Initiating program...")
+CommOutbound("RPiConsole", "[INFO] Logging started!")
+CommOutbound("RPiConsole", "[INFO] Starting camera...")
+#
+#Start communication with Operator Console and RoboRio
+#
+########################################################################################################################################################################################################################################################
+# Send start of transmission feed character "/" to the RoboRio.                                                                                                                                                                                        #
+# Format is: "@(X,Y)(X,Y)(X,Y)#", with "@" indicating the start of a transmission feed, and "()" marking individual "packets" of information; in this case, X and Y values, conveying the position of the robot in relation to the center of the goal. #
+# "#" indicates the end of a transmission feed, and is sent when the program is halted.                                                                                                                                                                #
+# Put an IF statement here to see if communication is working correctly. When the RoboRio sees the "@" it should send back a message telling the program that it indeed sees the connection. Then we'll begin the rest of our script...                #
+#                                                                                                                                                                                                                                                      #
+# Here is some psudo-code:                                                                                                                                                                                                                             #
+#                                                                                                                                                                                                                                                      #
+#  string message = "@";                                                                                                                                                                                                                               #
+#  send(message);                                                                                                                                                                                                                                      #
+#  if (reply == "@(I see you!)#")                                                                                                                                                                                                                      #
+#  	{                                                                                                                                                                                                                                                  #
+# 	 Continue_With_Program                                                                                                                                                                                                                             #
+# 	}                                                                                                                                                                                                                                                  #
+#  else                                                                                                                                                                                                                                                #
+#  	{                                                                                                                                                                                                                                                  #
+# 	 DeleteSystem32... or provide an error message.                                                                                                                                                                                                    #
+# 	}                                                                                                                                                                                                                                                  #
+########################################################################################################################################################################################################################################################
+#
+#Start capturing and processing of images
+#
+#Try to initialize the camera and grab a reference to the raw camera capture.
+try:
+	camera = PiCamera()
+	camera.resolution = resolution
+	camera.shutter_speed = 10000
+	camera.exposure_mode = 'off'
+	rawCapture = PiRGBArray(camera, size=resolution)
+	#Allow camera to start.
+	time.sleep(0.5)
+	CommOutbound("RPiConsole", "[INFO] Camera started!")
+except:
+	CommOutbound("RPiConsole", "[FATL] Unable to start camera! Attempting to continue with program.")
 #Capture frames from the camera
+CommOutbound("RPiConsole", "[INFO] Starting image capturing and processing...")
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 	if i % 10 == true:
 		#
@@ -251,6 +329,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	imagecount = imagecount + 1
 	imagename = 'TargetImage_' + str(i) + '.jpg'
 	cv2.imwrite(imagename,drawnImage)
+	CommOutbound("RPiConsole", "[INFO] Image captured: " + imagename + ".")
 	#Clear the stream in preparation for the next frame
 	rawCapture.truncate(0)
 	#Calculate the increment for the shutter speed by 1% of it's current value
@@ -266,37 +345,34 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	Latentcy = math.ceil((TimeEnd - TimeStart))
 	#Add this times latentcy to AverageLatentcy variable
 	AverageLatentcy += Latentcy
-	#print 'Latentcy: ' + str(Latentcy)
-	print("[INFO] Image captured and processed: " + imagename + ".")
-	print(time.strftime("%H:%M:%S") + " [INFO] Image captured and processed: " + imagename + ".", file=log.txt)
+	
 	if finalTargets == 0:
-		print("[INFO] No targets were detected in image " + imagename + ".")
-		print(time.strftime("%H:%M:%S") + " [INFO] No targets were detected in image " + imagename + ".", file=log.txt)
+		CommOutbound("RPiConsole", "[INFO] No goal was detected in image \"" + imagename + "\".")
 	else:
-		print("[INFO] A total of " finalTargets + "targets were detected in " + imagename + ".")
-		print(time.strftime("%H:%M:%S") + " [INFO] A total of " finalTargets + "targets were detected in " + imagename + ".", file=log.txt)
+		CommOutbound("RPiConsole", "[INFO] " + finalTargets + " targets were detected in \"" + imagename + "\"! Sending informatin to RoboRio module...")
 		#
 		#SEND INFORMATION TO ROBORIO, AND LOG THAT INFORMATION WAS SENT, ALONG WITH A COPY OF THAT INFORMATION! (Both to console and to log file.)
 		#
-		#Potential example below:
-		#[INFO] Communication stream: Pi --> RoboRio : (VARIABLE1,VARIABLE2)
+		message = "(" + angles + ")"
+		CommOutbound("RPiConsole", "[INFO] Communication stream: RPi --> RPiConsole: " + message)
+		#CommOutbound("RoboRio", "[INFO] Communication stream: RPi --> RoboRio: " + message)
 	#Reset values for TimeStart, TimeEnd, and latentcy
 	TimeStart = 0
 	TimeEnd = 0
 	Latentcy = 0
+	#Listen for any incoming messages from operator console:
+	CommInbound("Op", "Time", "50")
+	if message == "halt"
+		break
+	else if message == "download"
+		#Code for transfering of log text data, and images will go HERE.
 	if key == 27:
 		break
-print("[INFO] Abort program key press detected! Stopping program...")
-print(time.strftime("%H:%M:%S") + " [INFO] Abort program key press detected! Stopping program...", file=log.txt)
-print("[INFO] Letting the RoboRio module know that program is stopping; sending end-of-stream signal...")
-print(time.strftime("%H:%M:%S") + " [INFO] Letting the RoboRio module know that program is stopping; sending end-of-stream signal...", file=log.txt)
-# Add in responses to other roborio reactions HERE.
-print("[INFO] RoboRio acknowledged end-of-stream signal; stream closed.")
-print(time.strftime("%H:%M:%S") + " [INFO] RoboRio acknowledged end-of-stream signal; stream closed.", file=log.txt)
-#Put code for roborio communication HERE.
-#Calculates average latentcy
+message = "[INFO] Program inturrupt signal detected! Stopping program..."
+CommOutbound("RPiConsole", "[INFO]  " + message)
+#Record average latentcy
 AverageLatentcy = AverageLatentcy / imagecount
-print("[INFO] Average image process time was " + AverageLatentcy + ".")
-print(time.strftime("%H:%M:%S") + " [INFO] Average image process time was " + AverageLatentcy + ".", file=log.txt)
-print("[INFO] Program stopped!")
-print(time.strftime("%H:%M:%S") + " [INFO] Program stopped!, file=log.txt)
+message = "Average image process time: " + AverageLatentcy + "."]
+CommOutbound("RPiConsole", "[INFO] Communication stream: RPi --> RPiConsole: " + message)
+#Stop of program message
+CommOutbound("RPiConsole", "[INFO] Program execution halting NOW.")
