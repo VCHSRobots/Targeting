@@ -22,18 +22,18 @@ def CommOutbound(recipiant, message):
 	if recipiant == "RPiConsole":
 		print(message)
 		#Log the communication stream:
-		logmsg = strftime(%X, time.time()) + " [INFO] Communication stream: RPi --> RPiConsole: " + message
+		logmsg = time.strftime("%X") + " [INFO] Communication stream: RPi --> RPiConsole: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 	elif recipiant == "RoboRio":
 		#Code HERE to send "message" to RoboRio
 		#Log the communication stream:
-		logmsg = strftime(%X, time.time()) + " [INFO] Communication stream: RPi --> RoboRio: " + message
+		logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: RPi --> RoboRio: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 	elif recipiant == "Op":
 		#Log the communication stream:
-		logmsg = strftime(%X, time.time()) + " [INFO] Communication stream: RPi --> Op: " + message
+		logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: RPi --> Op: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 #CommInbound Function
@@ -55,7 +55,7 @@ def CommInbound(sender, mode, value):
 			while messagesrecieved < value:
 				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
 				#Log the communication stream:
-				logmsg = strftime(%X, time.time()) + " [INFO] Communication stream: RoboRio --> RPi: " + message
+				logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: RoboRio --> RPi: " + message
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				messagesrecieved += 1
@@ -75,7 +75,7 @@ def CommInbound(sender, mode, value):
 			while messagesrecieved < value:
 				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
 				#Log the communication stream:
-				logmsg = strftime(%X, time.time()) + " [INFO] Communication stream: Pi --> Op: " + message
+				logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: Pi --> Op: " + message
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				messagesrecieved += 1
@@ -95,7 +95,7 @@ def CommInbound(sender, mode, value):
 			while messagesrecieved < value:
 				#Code for listening goes HERE. Only continue with code past this point when a message is properly recieved.
 				#Log the communication stream:
-				logmsg = strftime(%X, time.time()) + " [INFO] Communication stream: Pi --> Op: " + message
+				logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: Pi --> Op: " + message
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				messagesrecieved += 1
