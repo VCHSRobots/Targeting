@@ -354,8 +354,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	#elif message == "download":
 	#	#Code for transfering of log text data, and images will go HERE.
 	#	print("temp code here, just for syntax reasons while testing")
-	if key == 27:
-		break
 message = "[INFO] Program inturrupt signal detected! Stopping program..."
 CommOutbound("RPiConsole", "[INFO]  " + message)
 #Record average latentcy
