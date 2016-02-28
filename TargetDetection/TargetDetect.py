@@ -354,12 +354,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	#elif message == "download":
 	#	#Code for transfering of log text data, and images will go HERE.
 	#	print("temp code here, just for syntax reasons while testing")
-	CommInbound("Op", "Time", "50")
-	if message == "halt":
-		break
-	elif message == "download":
-		#Code for transfering of log text data, and images will go HERE.
-		print("temp code here, just for syntax reasons while testing")
 	if key == 27:
 		break
 message = "[INFO] Program inturrupt signal detected! Stopping program..."
