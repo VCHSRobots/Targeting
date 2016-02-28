@@ -25,17 +25,23 @@ def CommOutbound(recipiant, message):
 		logmsg = time.strftime("%X") + " [INFO] Communication stream: RPi --> RPiConsole: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
+		message = ""
+		logmsg = ""
 	elif recipiant == "RoboRio":
 		#Code HERE to send "message" to RoboRio
 		#Log the communication stream:
 		logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: RPi --> RoboRio: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
+		message = ""
+		logmsg = ""
 	elif recipiant == "Op":
 		#Log the communication stream:
 		logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: RPi --> Op: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
+		message = ""
+		logmsg = ""
 #CommInbound Function
 def CommInbound(sender, mode, value):
 	message = ""
@@ -50,6 +56,8 @@ def CommInbound(sender, mode, value):
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
 				#Code for listening goes HERE.
+				message = ""
+				logmsg = ""
 		elif mode == "Number":
 			messagesrecieved = 0
 			while messagesrecieved < value:
@@ -59,6 +67,8 @@ def CommInbound(sender, mode, value):
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				messagesrecieved += 1
+				message = ""
+				logmsg = ""
 	elif sender == "Op":
 		if mode == "Time":
 			#start timer
@@ -70,6 +80,8 @@ def CommInbound(sender, mode, value):
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
 				#Code for listening goes HERE.
+				message = ""
+				logmsg = ""
 		elif mode == "Number":
 			messagesrecieved = 0
 			while messagesrecieved < value:
@@ -79,6 +91,8 @@ def CommInbound(sender, mode, value):
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				messagesrecieved += 1
+				message = ""
+				logmsg = ""
 	elif sender == "All":
 		if mode == "Time":
 			#start timer
@@ -90,6 +104,8 @@ def CommInbound(sender, mode, value):
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
 				#Code for listening goes HERE.
+				message = ""
+				logmsg = ""
 		elif mode == "Number":
 			messagesrecieved = 0
 			while messagesrecieved < value:
@@ -99,6 +115,8 @@ def CommInbound(sender, mode, value):
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				messagesrecieved += 1
+				message = ""
+				logmsg = ""
 # A call back function for the trackbars... it does nothing...
 def nothing(jnk):
 	pass
