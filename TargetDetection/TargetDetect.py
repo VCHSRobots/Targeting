@@ -362,7 +362,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		print("temp code here, just for syntax reasons while testing")
 	if key == 27:
 		break
->>>>>>> parent of da466d9... Temporarly disabled CommOutbound code in image capture.
 message = "[INFO] Program inturrupt signal detected! Stopping program..."
 CommOutbound("RPiConsole", "[INFO]  " + message)
 #Record average latentcy
