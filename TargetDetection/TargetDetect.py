@@ -163,7 +163,7 @@ AverageLatentcy = 0
 #Initialize program
 #
 #Print startup informaton to console.
-CommOutbound("RPiConsole", "[INFO] Initiating program...")
+CommOutbound("RPiConsole", "[INFO] Initiating program... Press \"Ctrl + C\" to stop program execution.")
 CommOutbound("RPiConsole", "[INFO] Logging started!")
 CommOutbound("RPiConsole", "[INFO] Starting camera...")
 #
@@ -354,9 +354,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	#elif message == "download":
 	#	#Code for transfering of log text data, and images will go HERE.
 	#	print("temp code here, just for syntax reasons while testing")
-	key = cv2.WaitKey(27) & 0x100
-	if key == 27:
-		break
+except KeyboardInterrupt:
+	break
 message = "[INFO] Program inturrupt signal detected! Stopping program..."
 CommOutbound("RPiConsole", "[INFO]  " + message)
 #Record average latentcy
