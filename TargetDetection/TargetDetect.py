@@ -354,6 +354,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	#elif message == "download":
 	#	#Code for transfering of log text data, and images will go HERE.
 	#	print("temp code here, just for syntax reasons while testing")
+	key = cv.WaitKey(27) % 0x100
 	if key == 27:
 		break
 message = "[INFO] Program inturrupt signal detected! Stopping program..."
