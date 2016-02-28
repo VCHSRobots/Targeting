@@ -45,6 +45,7 @@ def CommInbound(sender, mode, value):
 			startlistentime = time.time()
 			#While time listened is less than the elapsed time:
 			#Figure out how to log this properly!!!
+			listentime = 0
 			while listentime < value:
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
@@ -64,6 +65,7 @@ def CommInbound(sender, mode, value):
 			startlistentime = time.time()
 			#While time listened is less than the elapsed time:
 			#Figure out how to log this properly!!!
+			listentime = 0
 			while listentime < value:
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
@@ -83,6 +85,7 @@ def CommInbound(sender, mode, value):
 			startlistentime = time.time()
 			#While time listened is less than the elapsed time:
 			#Figure out how to log this properly!!!
+			listentime = 0
 			while listentime < value:
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
@@ -330,7 +333,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	Latentcy = math.ceil((TimeEnd - TimeStart))
 	#Add this times latentcy to AverageLatentcy variable
 	AverageLatentcy += Latentcy
-	if finalTargets == 0:
+	if len(finalTargets) == 0:
 		CommOutbound("RPiConsole", "[INFO] No goal was detected in image \"" + imagename + "\".")
 	else:
 		CommOutbound("RPiConsole", "[INFO] " + str(len(finalTargets)) + " targets were detected in \"" + imagename + "\"! Sending information to RoboRio module...")
