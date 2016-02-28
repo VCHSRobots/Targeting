@@ -348,12 +348,23 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	TimeEnd = 0
 	Latentcy = 0
 	#Listen for any incoming messages from operator console:
+<<<<<<< HEAD
 	#CommInbound("Op", "Time", "50")
 	#if message == "halt":
 	#	break
 	#elif message == "download":
 	#	#Code for transfering of log text data, and images will go HERE.
 	#	print("temp code here, just for syntax reasons while testing")
+=======
+	CommInbound("Op", "Time", "50")
+	if message == "halt":
+		break
+	elif message == "download":
+		#Code for transfering of log text data, and images will go HERE.
+		print("temp code here, just for syntax reasons while testing")
+	if key == 27:
+		break
+>>>>>>> parent of da466d9... Temporarly disabled CommOutbound code in image capture.
 message = "[INFO] Program inturrupt signal detected! Stopping program..."
 CommOutbound("RPiConsole", "[INFO]  " + message)
 #Record average latentcy
