@@ -44,8 +44,7 @@ def CommInbound(sender, mode, value):
 			#start timer
 			startlistentime = time.time()
 			#While time listened is less than the elapsed time:
-			with open('log.txt', 'a') as f:
-				print(logmsg, file=f)
+			#Figure out how to log this properly!!!
 			while listentime < value:
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
@@ -64,8 +63,7 @@ def CommInbound(sender, mode, value):
 			#start timer
 			startlistentime = time.time()
 			#While time listened is less than the elapsed time:
-			with open('log.txt', 'a') as f:
-				print(logmsg, file=f)
+			#Figure out how to log this properly!!!
 			while listentime < value:
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
@@ -84,8 +82,7 @@ def CommInbound(sender, mode, value):
 			#start timer
 			startlistentime = time.time()
 			#While time listened is less than the elapsed time:
-			with open('log.txt', 'a') as f:
-				print(logmsg, file=f)
+			#Figure out how to log this properly!!!
 			while listentime < value:
 				#Set listentime to elapsed time:
 				listentime = time.time() - startlistentime
