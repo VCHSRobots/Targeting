@@ -21,6 +21,14 @@ import threading
 #
 #CommOutbound Function
 def CommOutbound(recipiant, message):
+	#Sets up talking variables...
+	message = ""
+	host = ""
+	port = 5800
+	buf = 1024
+	addr = (host, port)
+	UDPSock = socket(AF_INET, SOCK,DGRAM)
+	UDPSock.bind(addr)
 	if recipiant == "RPiConsole":
 		print(message)
 		#Log the communication stream:
