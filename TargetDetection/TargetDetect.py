@@ -47,7 +47,7 @@ def CommOutbound(recipiant, message):
 		message = ""
 		logmsg = ""
 #ActiveComm variable
-ActiveComm = false
+ActiveComm = False
 #CommInbound Thread / Function
 def CommInbound():
 	#Sets up listening variables...
@@ -68,9 +68,9 @@ def CommInbound():
 		pass #Send back the latest targeting data
 	if message == "/go":
 		OpIP = addr[0]
-		ActiveComm = true
+		ActiveComm = True
 	if message == "/halt":
-		ActiveComm = false
+		ActiveComm = False
 	if message == "/download":
 		pass #Send off log and pictures to Op Console
 	if message == "/viewgo":
@@ -182,7 +182,7 @@ def MainThread():
 	#Capture frames from the camera
 	CommOutbound("RPiConsole", "[INFO] Starting image capturing and processing...")
 	CommOutbound("Op", "[INFO] Starting image capturing and processing...")
-	while ActiveComm == true:
+	while ActiveComm == True:
 		for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 			if imagecount % 10 == True:
 				#
