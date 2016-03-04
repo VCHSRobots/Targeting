@@ -77,6 +77,10 @@ def CommInbound():
 	if message == "/go":
 		OpIP = addr[0]
 		ActiveComm = True
+		#START MAIN THREAD
+		ThreadMain = Thread(target = MainThread)
+		ThreadMain.start()
+		thread.join()
 	if message == "/halt":
 		ActiveComm = False
 	if message == "/download":
@@ -148,32 +152,29 @@ def GetAzEl(point):
 	return (az * CameraFOV[0], el * CameraFOV[1])
 #Integer for naming files, and determining the picture settings - every tenth picture is taken with "normal" settings, while all other pictures have the optimal settings for goal detection.
 imagecount = 0
-#Interget which will be used, upon program halt, to calculate the average latentcy - or image process time
+#Interger which will be used, upon program halt, to calculate the average latentcy - or image process time
 AverageLatentcy = 0
 #
 #Initialize program
 #
-#Print startup informaton to console.
-CommOutbound("RPiConsole", "[INFO] Initiating program... Press \"Ctrl + C\" to stop program execution.")
-CommOutbound("Op", "[INFO] Initiating program... Press \"Stop Program\" to remotely stop program execution.")
-CommOutbound("RPiConsole", "[INFO] Logging started!")
-CommOutbound("Op", "[INFO] Logging started!")
-CommOutbound("RPiConsole", "[INFO] Starting camera...")
-CommOutbound("Op", "[INFO] Starting camera...")
 #
 #Start communication with Operator Console and RoboRio
 #
-#START LISTENING THREAD AND MAIN THREAD HERE
+#START LISTENING THREAD
 ThreadListen = Thread(target = CommInbound)
-ThreadMain = Thread(target = MainThread)
 ThreadListen.start()
-ThreadMain.start()
-thread.join()
 #
 #Start capturing and processing of images
 #
 #Try to initialize the camera and grab a reference to the raw camera capture.
 def MainThread():
+	#Print startup informaton to console.
+	CommOutbound("RPiConsole", "[INFO] Initiating program... Press \"Ctrl + C\" to stop program execution.")
+	CommOutbound("Op", "[INFO] Initiating program... Press \"Stop Program\" to remotely stop program execution.")
+	CommOutbound("RPiConsole", "[INFO] Logging started!")
+	CommOutbound("Op", "[INFO] Logging started!")
+	CommOutbound("RPiConsole", "[INFO] Starting camera...")
+	CommOutbound("Op", "[INFO] Starting camera...")
 	try:
 		camera = PiCamera()
 		camera.resolution = resolution
