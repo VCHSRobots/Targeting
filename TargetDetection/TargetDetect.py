@@ -1,7 +1,7 @@
 #####################################################################################################
 # Credits for TargetDetect.py:                                                                      #
 # The code for detecting the goal, and drawing on the image was created by Kevin Brandon. (Thanks!) #
-# The rest of the code was created by the Epic Robotz Admin Web team.                                #
+# The rest of the code was created by the Epic Robotz Admin Web team.                               #
 #####################################################################################################
 
 #Import the necessary packages
@@ -64,20 +64,20 @@ def CommInbound():
 	logmsg = strftime("%X", time.time()) + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
 	with open('log.txt', 'a') as f:
 		print(logmsg, file=f)
-	if message[:4] == "/ping"
+	if message[:4] == "/ping":
 		pass #Send back the latest targeting data
-	if message == "/go"
+	if message == "/go":
 		OpIP = addr[0]
 		ActiveComm = true
-	if message == "/halt"
+	if message == "/halt":
 		ActiveComm = false
-	if message == "/download"
+	if message == "/download":
 		pass #Send off log and pictures to Op Console
-	if message == "/viewgo"
+	if message == "/viewgo":
 		pass #Start streaming image data to OpConsole
-	if message == "/viewhalt"
+	if message == "/viewhalt":
 		pass #Stop streaming image data to OpConsole
-	if message[:6] == "/change" 
+	if message[:6] == "/change":
 		pass
 	message = "" 
 	logmsg = ""
@@ -145,8 +145,6 @@ AverageLatentcy = 0
 #
 #Initialize program
 #
-#Start CommInbound thread...
-ListenThread = 
 #Print startup informaton to console.
 CommOutbound("RPiConsole", "[INFO] Initiating program... Press \"Ctrl + C\" to stop program execution.")
 CommOutbound("Op", "[INFO] Initiating program... Press \"Stop Program\" to remotely stop program execution.")
@@ -157,14 +155,12 @@ CommOutbound("Op", "[INFO] Starting camera...")
 #
 #Start communication with Operator Console and RoboRio
 #
-#START LISTENING THREAD HERE
+#START LISTENING THREAD AND MAIN THREAD HERE
 ThreadListen = Thread(target = CommInbound)
 ThreadMain = Thread(target = MainThread)
 ThreadListen.start()
 ThreadMain.start()
 thread.join()
-#START MAIN THREAD HERE
-
 #
 #Start capturing and processing of images
 #
@@ -339,7 +335,7 @@ def MainThread():
 				#
 				message = "(" + str(angles) + ")"
 				CommOutbound("RPiConsole", "[INFO] Communication stream: RPi --> RPiConsole: " + message)
-				CommOutbound("Op", "[INFO] Communication stream: RPi --> Op: " + message")
+				CommOutbound("Op", "[INFO] Communication stream: RPi --> Op: " + message)
 				#CommOutbound("RoboRio", "[INFO] Communication stream: RPi --> RoboRio: " + message)
 			#Reset values for TimeStart, TimeEnd, and latentcy
 			TimeStart = 0
