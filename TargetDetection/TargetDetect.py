@@ -65,7 +65,7 @@ def CommInbound():
 	port = 5800
 	buf = 1024
 	addr = (host, port)
-	UDPSock = socket(AF_INET, SOCK,DGRAM)
+	UDPSock = socket(AF_INET, SOCK_DGRAM)
 	UDPSock.bind(addr)
 	#Code for listening goes HERE.
 	(data, addr) = UDPSock.recvfrom(buf)
