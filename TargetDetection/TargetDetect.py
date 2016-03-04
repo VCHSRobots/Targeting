@@ -9,7 +9,6 @@ from __future__ import print_function
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from socket import *
-import socket
 import math
 import time
 import cv2
@@ -28,7 +27,7 @@ def CommOutbound(recipiant, message):
 	port = 5800
 	buf = 1024
 	addr = (host, port)
-	UDPSock = socket(AF_INET, SOCK,DGRAM)
+	UDPSock = socket(AF_INET, SOCK_DGRAM)
 	UDPSock.bind(addr)
 	if recipiant == "RPiConsole":
 		print(message)
