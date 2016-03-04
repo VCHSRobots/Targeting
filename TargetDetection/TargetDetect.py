@@ -43,7 +43,7 @@ def CommOutbound(recipiant, message):
 		message += "\r"
 		sock.sendto(message, ("RoboRioIP"), 5800)
 		#Log the communication stream:
-		logmsg = strftime("%X", time()) + " [INFO] Communication stream: RPi --> RoboRio: " + message
+		logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: RPi --> RoboRio: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 		message = ""
@@ -51,7 +51,7 @@ def CommOutbound(recipiant, message):
 	elif recipiant == "Op":
 		sock.sendto(message, ("OpIP"), 5800)
 		#Log the communication stream:
-		logmsg = strftime("%X", time()) + " [INFO] Communication stream: RPi --> Op: " + message
+		logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: RPi --> Op: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 		message = ""
@@ -71,7 +71,7 @@ def CommInbound():
 	#Code for listening goes HERE.
 	(data, addr) = UDPSock.recvfrom(buf)
 	message = data
-	logmsg = strftime("%X", time()) + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
+	logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
 	with open('log.txt', 'a') as f:
 		print(logmsg, file=f)
 	if message[:4] == "/ping":
@@ -200,7 +200,7 @@ def MainThread():
 				#Runs with settings set for "regular picture mode"
 				#
 				#Start latentcy timer
-				TimeStart = time()
+				TimeStart = datetime.timetuple
 				#
 				#Set values for processing:
 				#
@@ -229,7 +229,7 @@ def MainThread():
 				#Runs with settings set for optimal goaldetection conditions
 				#
 				#Start latentcy timer
-				TimeStart = time()
+				TimeStart = datetime.timetuple
 				#
 				#Set values for processing:
 				#
@@ -331,7 +331,7 @@ def MainThread():
 			#Set the shutter speed
 			camera.shutter_speed = ss + inc
 			#Stop Latentcy timer
-			TimeEnd = time()
+			TimeEnd = datetime.timetuple
 			Latentcy = math.ceil((TimeEnd - TimeStart))
 			#Add this times latentcy to AverageLatentcy variable
 			AverageLatentcy += Latentcy
