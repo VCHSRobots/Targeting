@@ -10,6 +10,7 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 from socket import *
 from threading import Thread
+from time import strftime
 import math
 import time
 import cv2
