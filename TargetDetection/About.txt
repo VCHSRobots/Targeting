@@ -10,49 +10,56 @@ From there, it sends information about those images to a RoboRio, and to a Drive
 Information is sent as follows:
 
 Send start of transmission feed character "@" to the RoboRio.
-Format is: "@(X,Y)(X,Y)(X,Y)#", with "@" indicating the start of a transmission feed, and "()" marking individual "packets" of information; in this case, X and Y values, conveying the position of the robot in relation to the center of the goal.
+Roborio should respond saying that it is ready to recieve data.
+Format is: "SenderName(X,Y)(X,Y)(X,Y)#", with "()" marking individual "packets" of information; in this case, X and Y values, conveying the position of the robot in relation to the center of the goal.
 "#" indicates the end of a transmission feed, and is sent when the program is halted.
+Text prefixed with a "/" means that that text should be interpreted as a command.
 
 There are two functions which have to do with communication: "CommOutbound", and "CommInbound".
-Their syntax is as follows:
 
--	CommOutbound(recipiant, message)
-	
-	Recipiant may one be the following:
-		RPiConsole	-	Send a message to the Raspberry Pi's console
-		RoboRio		-	Send a message to the RoboRio
-		Op			-	Send a message to the Operator / Driver console
-	ALL messages sent are recorded in the log as follows: "TIME&DATE [INFO] Communication stream : Sender --> Recipiant: Message"
-	Example: 18:12:05 [INFO] Communication stream: Pi --> RoboRio: (7,12)
-	
--	CommInbound(sender, mode, value)
-	
-	Sender may be one of the following:
-		RoboRio		-	Use this if listening for messages from the RoboRio only
-		Op			-	Use this if listening for messages from the Operator / Driver console only
-		All			-	Use this if listening for messages from any sender
-		
-	Mode may be one of the following:
-		Time		-	Listen for an amount of time; specified by the "value" variable.
-		Number		-	Listen for a certain number of responses, then stop listening; specified by the "value" variable.
+	CommOutbound() has the following syntax options:
+		CommOutbound(recipiant, message)
+	Recipiant can be one of the following:
+		RPiConsole	-	The Raspberry Pi's console
+		RoboRio		-	The RoboRio module
+		OpConsole	-	The Operator / Driver program
+	Message *must* be a string of text.
 
-	Value:
-		(An interger with a value ranging from -1 to 8.64e+7)
-			When used with "time":
-				Time period is in milliseconds, so 1000 would equal one second. The maximum time period is approx. 24 hours, or 8.64e+7 (86,400,000) milliseconds. To listen indefinitly, enter a value of "-1".
-			When used with "number":
-				Indicates the number of messages to recieve before stopping listening. Maximum number of messages is approx. 8.64e+7 (86,400,000). To listen indefinitly, enter a value of "-1".
+<Extra syntax options for CommInbound() removed as considered un-needed for program execution.>
 
-	CommInbound can also interprets special commands that are sent to it. Here are the commands which it can understand:
-		"halt"		-	Halt the execution of the program; only can be understood if sender is "Op".
-		"download"	-	Send a copy of the log file; and then pictures, to the Operator console; only can be understood if sender is "Op".
+CommInbound interprets special commands that are sent to it. Here are the commands which it can understand:
+"/go"		-	Start the execution of the main body of the program.
+"/halt"		-	Halt the execution of the program.
+"/download"	-	Send a copy of the log file; and then pictures, to the Operator console.
+"/viewgo"	-	Start transmitting live images to the Operator console.
+"/viewhalt"	-	Stop transmitting live images to the Operator console.
+"/change"	-	Change settings on-the-fly.
+
+	"/change" has a special syntax of its own. It is as follows:
+
+		/change:drawThresh,useAdaptive,thresh,minPerim,autoShutter,eps,aspect,aspectTol,adaptiveSize
+
+	ALL of these values must be positive real integers.
+	drawThresh	-	Draw Threshold on image? Can be a 1 or a 0.
+	useAdaptive	-	Use adaptive threshold? Can be a 1 or a 0.
+	thresh		-	Set the threshold value. Can be anywhere from 1 - 1000
+	minPerim	-	Set the minimum perimiter of a valid target (in pixel length). Can be anywhere from 1 to 1000.
+	autoShutter	-	Set the target average pixel value in the image, used to set the shutter speed. (From 1 to 1000)
+	eps		-	Set the max angle we can be off for horizontal and verticle value: (1 to 100)
+	aspect		-	Set the aspect ratio of the target (width / height) (Anywhere from 1 to 100)
+	aspectTol	-	Set the aspect ratio tolerance in percetage (From 1 to 100)
+	adaptiveSize	-	Set adaptive threshold size. (From 3 to 100)
+
 
 The log file records all events which take place in the program, along with a date stamp.
 
 With program messages, there are a few prefixes:
 	[INFO]	-	General information message
 	[WARN]	-	Similar to [INFO], but a warning message
-	[FATL]	-	Is used when something has gone horribly wrong
+	[FATL]	-	Is used when something has gone horribly wrong!
+
+We are using port 5800 for communication reasons.
 
 The targetdetectconfiguration.conf file is a file used for setting the default configuration of the program.
 It includes instructions for how to change settings, and what each setting effects.
+
