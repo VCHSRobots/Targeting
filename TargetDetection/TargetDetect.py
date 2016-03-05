@@ -23,7 +23,7 @@ import threading
 #
 #ActiveComm variable
 global ActiveComm
-ActiveComm = false
+ActiveComm = False
 #Sets up listening and talking socket variables...
 message = ""
 host = ""
