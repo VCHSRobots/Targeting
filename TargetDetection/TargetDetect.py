@@ -22,7 +22,8 @@ import threading
 #Functions and Variables and Threads, oh my!
 #
 #ActiveComm variable
-global ActiveComm = False
+global ActiveComm
+ActiveComm = false
 #Sets up listening and talking socket variables...
 message = ""
 host = ""
