@@ -66,7 +66,7 @@ def CommInbound():
 		(data, addr) = UDPSock.recvfrom(buf)
 		message = data
 		if message == "/go":
-			logmsg = strftime("%X") + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
+			logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
 			with open('log.txt', 'a') as f:
 				print(logmsg, file=f)
 			OpIP = addr[0]
