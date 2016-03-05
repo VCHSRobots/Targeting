@@ -21,9 +21,6 @@ import threading
 #
 #Functions and Variables and Threads, oh my!
 #
-#ActiveComm variable
-global ActiveComm
-ActiveComm = False
 #Sets up listening and talking socket variables...
 message = ""
 host = ""
@@ -61,6 +58,9 @@ def CommOutbound(recipiant, message):
 		logmsg = ""
 #CommInbound Thread / Function
 def CommInbound():
+	#ActiveComm variable
+	global ActiveComm
+	ActiveComm = False
 	while True:
 		#Code for listening goes HERE.
 		(data, addr) = UDPSock.recvfrom(buf)
