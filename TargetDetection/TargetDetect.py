@@ -21,6 +21,8 @@ import threading
 #
 #Functions and Variables and Threads, oh my!
 #
+#ActiveComm variable
+ActiveComm = False
 #Sets up listening and talking socket variables...
 message = ""
 host = ""
@@ -56,8 +58,7 @@ def CommOutbound(recipiant, message):
 			print(logmsg, file=f)
 		message = ""
 		logmsg = ""
-#ActiveComm variable
-ActiveComm = False
+
 #CommInbound Thread / Function
 def CommInbound():
 	while True:
