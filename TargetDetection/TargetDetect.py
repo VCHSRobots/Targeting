@@ -66,7 +66,9 @@ print("[TEMP] Setting up CommInbound Function")
 def CommInbound():
 	while True:
 		#Code for listening goes HERE.
+		print("[TEMP] Setting up CommInbound listening stuffs")
 		(data, addr) = UDPSock.recvfrom(buf)
+		print("[TEMP] Got a message!!!")
 		message = data
 		logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
 		with open('log.txt', 'a') as f:
