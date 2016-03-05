@@ -64,35 +64,37 @@ ActiveComm = False
 print("[TEMP] Setting up CommInbound Function")
 #CommInbound Thread / Function
 def CommInbound():
-	#Code for listening goes HERE.
-	(data, addr) = UDPSock.recvfrom(buf)
-	message = data
-	logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
-	with open('log.txt', 'a') as f:
-		print(logmsg, file=f)
-	if message[:4] == "/ping":
-		pass #Send back the latest targeting data
-	if message == "/go":
-		OpIP = addr[0]
-		ActiveComm = True
-		print("[TEMP] Starting main thread, I recieved a message of \"/go\"")
-		#START MAIN THREAD
-		ThreadMain = Thread(target = MainThread)
-		ThreadMain.start()
-		thread.join()
-	if message == "/halt":
-		ActiveComm = False
-	if message == "/download":
-		pass #Send off log and pictures to Op Console
-	if message == "/viewgo":
-		pass #Start streaming image data to OpConsole
-	if message == "/viewhalt":
-		pass #Stop streaming image data to OpConsole
-	if message[:6] == "/change":
-		pass
-	message = "" 
-	logmsg = ""
-	sendername = ""
+	while True:
+		#Code for listening goes HERE.
+		(data, addr) = UDPSock.recvfrom(buf)
+		message = data
+		logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
+		with open('log.txt', 'a') as f:
+			print(logmsg, file=f)
+		if message == "/go":
+			OpIP = addr[0]
+			ActiveComm = True
+			print("[TEMP] Starting main thread, I recieved a message of \"/go\"")
+			#START MAIN THREAD
+			ThreadMain = Thread(target = MainThread)
+			ThreadMain.start()
+			thread.join()
+		if ActiveComm == true:
+			if message[:4] == "/ping":
+				pass #Send back the latest targeting data
+			if message == "/halt":
+				ActiveComm = False
+			if message == "/download":
+				pass #Send off log and pictures to Op Console
+			if message == "/viewgo":
+				pass #Start streaming image data to OpConsole
+			if message == "/viewhalt":
+				pass #Stop streaming image data to OpConsole
+			if message[:6] == "/change":
+				pass
+			message = "" 
+			logmsg = ""
+			sendername = ""
 # A call back function for the trackbars... it does nothing...
 def nothing(jnk):
 	pass
