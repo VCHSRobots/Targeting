@@ -13,7 +13,6 @@ from threading import Thread
 from time import strftime
 import math
 import time
-import datetime
 import cv2
 import numpy as np
 import os
@@ -46,7 +45,7 @@ def CommOutbound(recipiant, message):
 		message += "\r"
 		sock.sendto(message, ("RoboRioIP"), 5800)
 		#Log the communication stream:
-		logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: RPi --> RoboRio: " + message
+		logmsg = strftime("%X") + " [INFO] Communication stream: RPi --> RoboRio: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 		message = ""
@@ -54,7 +53,7 @@ def CommOutbound(recipiant, message):
 	elif recipiant == "Op":
 		sock.sendto(message, ("OpIP"), 5800)
 		#Log the communication stream:
-		logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: RPi --> Op: " + message
+		logmsg = strftime("%X") + " [INFO] Communication stream: RPi --> Op: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 		message = ""
