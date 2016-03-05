@@ -58,7 +58,6 @@ def CommOutbound(recipiant, message):
 			print(logmsg, file=f)
 		message = ""
 		logmsg = ""
-
 #CommInbound Thread / Function
 def CommInbound():
 	while True:
@@ -83,6 +82,7 @@ def CommInbound():
 				pass #Send back the latest targeting data
 			if message == "/halt":
 				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
+				ActiveComm = false
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				ActiveComm = False
