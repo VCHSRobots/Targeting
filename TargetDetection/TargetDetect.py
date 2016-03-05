@@ -29,7 +29,7 @@ port = 5800
 buf = 1024
 addr = (host, port)
 UDPSock = socket(AF_INET, SOCK_DGRAM)
-UDPSock.bind(addr)
+#UDPSock.bind(addr)
 #CommOutbound Function
 def CommOutbound(recipiant, message):
 	if recipiant == "RPiConsole":
