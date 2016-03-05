@@ -21,7 +21,6 @@ import threading
 #
 #Functions and Variables and Threads, oh my!
 #
-print("[TEMP] Setting up listening and talking socket variables.")
 #Sets up listening and talking socket variables...
 message = ""
 host = ""
@@ -30,7 +29,6 @@ buf = 1024
 addr = (host, port)
 UDPSock = socket(AF_INET, SOCK_DGRAM)
 UDPSock.bind(addr)
-print("[TEMP] Setting up CommOutbound Function...")
 #CommOutbound Function
 def CommOutbound(recipiant, message):
 	if recipiant == "RPiConsole":
@@ -60,22 +58,18 @@ def CommOutbound(recipiant, message):
 		logmsg = ""
 #ActiveComm variable
 ActiveComm = False
-print("[TEMP] Setting up CommInbound Function")
 #CommInbound Thread / Function
 def CommInbound():
 	while True:
 		#Code for listening goes HERE.
-		print("[TEMP] Setting up CommInbound listening stuffs")
 		(data, addr) = UDPSock.recvfrom(buf)
-		print("[TEMP] Got a message!!!")
 		message = data
-		with open('log.txt', 'a') as f:
-			print(logmsg, file=f)
 		if message == "/go":
 			logmsg = strftime("%X") + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
+			with open('log.txt', 'a') as f:
+				print(logmsg, file=f)
 			OpIP = addr[0]
 			ActiveComm = True
-			print("[TEMP] Starting main thread, I recieved a message of \"/go\"")
 			#START MAIN THREAD
 			ThreadMain = Thread(target = MainThread)
 			ThreadMain.start()
@@ -83,21 +77,33 @@ def CommInbound():
 		if ActiveComm == true:
 			if message[:4] == "/ping":
 				logmsg = strftime("%X") + " [INFO] Communication stream: RoboRio --> RPi: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
 				pass #Send back the latest targeting data
 			if message == "/halt":
 				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
 				ActiveComm = False
 			if message == "/download":
 				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
 				pass #Send off log and pictures to Op Console
 			if message == "/viewgo":
 				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
 				pass #Start streaming image data to OpConsole
 			if message == "/viewhalt":
 				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
 				pass #Stop streaming image data to OpConsole
 			if message[:6] == "/change":
 				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
+				with open('log.txt', 'a') as f:
+					print(logmsg, file=f)
 				pass
 			message = "" 
 			logmsg = ""
@@ -105,7 +111,6 @@ def CommInbound():
 # A call back function for the trackbars... it does nothing...
 def nothing(jnk):
 	pass
-print("[TEMP] Setting up checkanglesandaspect function...")
 # A function that checks the 4 sides of a quadrilatal, for goal detection in images.  
 # If all 4 sides are close to horizontal or vertical (+/- epsilon) 
 # AND make sure that the aspect ratio is within the tolerance
@@ -146,7 +151,6 @@ def CheckAnglesAndAspect(corners, epsilon, aspectRatio, aspectTolerance):
 		return False
 	#If we get here then all corners have been checked and are okay.
 	return True
-print("[TEMP] Setting up more imagedetection variables...")
 #Some color values we'll be using
 red = (0, 0, 255)
 green = (0, 255, 0)
@@ -170,7 +174,6 @@ AverageLatentcy = 0
 #
 #Start communication with Operator Console and RoboRio
 #
-print("[TEMP] Starting listening thread...")
 #START LISTENING THREAD
 ThreadListen = Thread(target = CommInbound)
 ThreadListen.start()
