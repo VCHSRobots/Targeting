@@ -22,15 +22,19 @@ import threading
 #Functions and Variables and Threads, oh my!
 #
 #Sets up listening and talking socket variables...
+global host
 host = ""
+global port
 port = 5800
+global buf
 buf = 1024
+global addr
 addr = (host, port)
+global UDPSock
 UDPSock = socket(AF_INET, SOCK_DGRAM)
 UDPSock.bind(addr)
 #CommOutbound Function
 def CommOutbound(recipiant, message):
-	message
 	global logmsg
 	global UDPSock
 	if recipiant == "RPiConsole":
