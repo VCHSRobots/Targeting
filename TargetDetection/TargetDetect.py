@@ -22,7 +22,7 @@ import threading
 #Functions and Variables and Threads, oh my!
 #
 #ActiveComm variable
-ActiveComm = False
+global ActiveComm = False
 #Sets up listening and talking socket variables...
 message = ""
 host = ""
@@ -82,7 +82,6 @@ def CommInbound():
 				pass #Send back the latest targeting data
 			if message == "/halt":
 				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
-				ActiveComm = false
 				with open('log.txt', 'a') as f:
 					print(logmsg, file=f)
 				ActiveComm = False
