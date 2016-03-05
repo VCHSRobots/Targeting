@@ -22,7 +22,6 @@ import threading
 #Functions and Variables and Threads, oh my!
 #
 #Sets up listening and talking socket variables...
-message = ""
 host = ""
 port = 5800
 buf = 1024
@@ -31,7 +30,7 @@ UDPSock = socket(AF_INET, SOCK_DGRAM)
 UDPSock.bind(addr)
 #CommOutbound Function
 def CommOutbound(recipiant, message):
-	global message
+	message
 	global logmsg
 	global UDPSock
 	if recipiant == "RPiConsole":
@@ -63,7 +62,6 @@ def CommOutbound(recipiant, message):
 def CommInbound():
 	#ActiveComm variable
 	global ActiveComm
-	global message
 	global logmsg
 	global UDPSock
 	global data
