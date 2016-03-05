@@ -75,7 +75,7 @@ def CommInbound():
 			ThreadMain = Thread(target = MainThread)
 			ThreadMain.start()
 			thread.join()
-		if ActiveComm == true:
+		if ActiveComm == True:
 			if message[:4] == "/ping":
 				logmsg = strftime("%X") + " [INFO] Communication stream: RoboRio --> RPi: " + message
 				with open('log.txt', 'a') as f:
