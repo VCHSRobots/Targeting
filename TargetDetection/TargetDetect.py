@@ -22,16 +22,16 @@ import threading
 #
 #Functions and Variables and Threads, oh my!
 #
+#Sets up listening and talking socket variables...
+message = ""
+host = ""
+port = 5800
+buf = 1024
+addr = (host, port)
+UDPSock = socket(AF_INET, SOCK_DGRAM)
+UDPSock.bind(addr)
 #CommOutbound Function
 def CommOutbound(recipiant, message):
-	#Sets up talking variables...
-	message = ""
-	host = ""
-	port = 5800
-	buf = 1024
-	addr = (host, port)
-	UDPSock = socket(AF_INET, SOCK_DGRAM)
-	UDPSock.bind(addr)
 	if recipiant == "RPiConsole":
 		print(message)
 		#Log the communication stream:
@@ -61,14 +61,6 @@ def CommOutbound(recipiant, message):
 ActiveComm = False
 #CommInbound Thread / Function
 def CommInbound():
-	#Sets up listening variables...
-	message = ""
-	host = ""
-	port = 5800
-	buf = 1024
-	addr = (host, port)
-	UDPSock = socket(AF_INET, SOCK_DGRAM)
-	UDPSock.bind(addr)
 	#Code for listening goes HERE.
 	(data, addr) = UDPSock.recvfrom(buf)
 	message = data
