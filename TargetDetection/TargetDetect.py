@@ -37,6 +37,7 @@ UDPSock.bind(addr)
 def CommOutbound(recipiant, message):
 	global logmsg
 	global UDPSock
+	UDPSock.bind(addr)
 	if recipiant == "RPiConsole":
 		print(message)
 		#Log the communication stream:
@@ -70,6 +71,7 @@ def CommInbound():
 	global UDPSock
 	global data
 	global addr
+	UDPSock.bind(addr)
 	ActiveComm = False
 	while True:
 		#Code for listening goes HERE.
