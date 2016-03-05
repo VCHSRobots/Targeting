@@ -31,6 +31,9 @@ UDPSock = socket(AF_INET, SOCK_DGRAM)
 UDPSock.bind(addr)
 #CommOutbound Function
 def CommOutbound(recipiant, message):
+	global message
+	global logmsg
+	global UDPSock
 	if recipiant == "RPiConsole":
 		print(message)
 		#Log the communication stream:
@@ -60,13 +63,18 @@ def CommOutbound(recipiant, message):
 def CommInbound():
 	#ActiveComm variable
 	global ActiveComm
+	global message
+	global logmsg
+	global UDPSock
+	global data
+	global addr
 	ActiveComm = False
 	while True:
 		#Code for listening goes HERE.
 		(data, addr) = UDPSock.recvfrom(buf)
 		message = data
 		if message == "/go":
-			logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
+			logmsg = strftime("%X") + " [INFO] Communication stream: O --> RPi: " + message
 			with open('log.txt', 'a') as f:
 				print(logmsg, file=f)
 			OpIP = addr[0]
