@@ -69,10 +69,10 @@ def CommInbound():
 		(data, addr) = UDPSock.recvfrom(buf)
 		print("[TEMP] Got a message!!!")
 		message = data
-		logmsg = strftime("%X", datetime.timetuple) + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
 		with open('log.txt', 'a') as f:
 			print(logmsg, file=f)
 		if message == "/go":
+					logmsg = strftime("%X") + " [INFO] Communication stream: " + sendername + " --> RPi: " + message
 			OpIP = addr[0]
 			ActiveComm = True
 			print("[TEMP] Starting main thread, I recieved a message of \"/go\"")
@@ -82,16 +82,22 @@ def CommInbound():
 			thread.join()
 		if ActiveComm == true:
 			if message[:4] == "/ping":
+				logmsg = strftime("%X") + " [INFO] Communication stream: RoboRio --> RPi: " + message
 				pass #Send back the latest targeting data
 			if message == "/halt":
+				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
 				ActiveComm = False
 			if message == "/download":
+				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
 				pass #Send off log and pictures to Op Console
 			if message == "/viewgo":
+				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
 				pass #Start streaming image data to OpConsole
 			if message == "/viewhalt":
+				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
 				pass #Stop streaming image data to OpConsole
 			if message[:6] == "/change":
+				logmsg = strftime("%X") + " [INFO] Communication stream: Op --> RPi: " + message
 				pass
 			message = "" 
 			logmsg = ""
